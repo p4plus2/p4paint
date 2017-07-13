@@ -52,7 +52,7 @@ image_editor::image_editor(QWidget *parent, QString file_name, QUndoGroup *undo_
 	change_format(0); //set a default format
 	
 	QGridLayout *layout = new QGridLayout();
-	layout->addWidget(draw_area, 0, 0);
+	layout->addWidget(draw_area, 0, 0, 1, 1, Qt::AlignTop);
 	layout->addLayout(scroll_layout, 0, 1, 1, 1, Qt::AlignRight);
 	layout->addWidget(format_selection, 1, 0);
 	setLayout(layout);
@@ -97,7 +97,9 @@ void image_editor::change_format(int a)
 {
 	Q_UNUSED(a);
 	draw_area->set_format(formats[format_selection->currentText()]);
+	updateGeometry();
 	adjustSize();
+	propagate_resize(this);
 }
 
 void image_editor::context_menu(const QPoint& position)

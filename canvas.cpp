@@ -24,8 +24,11 @@ void canvas::scroll_tiles(int delta)
 void canvas::set_scale(int scale_factor)
 {
 	scale = scale_factor;
-	setMinimumWidth(x_tiles * tile_width * scale);
+	
+	setMinimumSize(x_tiles * tile_width * scale, qMin(y_tiles * tile_height * scale, 512));
 	setMaximumWidth(x_tiles * tile_width * scale);
+	
+	update();
 }
 
 void canvas::set_format(abstract_format *image_format)
@@ -36,10 +39,8 @@ void canvas::set_format(abstract_format *image_format)
 	
 	tile_count = format->max_tiles();
 	tiles = format->get_tiles(0, tile_count);
-	setMinimumWidth(x_tiles * tile_width * scale);
-	setMaximumWidth(x_tiles * tile_width * scale);
 	
-	update();
+	set_scale(scale);
 }
 
 void canvas::paintEvent(QPaintEvent *event)
