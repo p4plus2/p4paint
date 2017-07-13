@@ -53,7 +53,8 @@ main_window::main_window(QWidget *parent)
 	menu_controller->connect_to_widget(this, WINDOW_EVENT);
 	menu_controller->connect_to_widget(dialog_controller, DIALOG_EVENT);
 #ifdef USE_DEFAULT_IMAGE
-	create_new_tab("g/GFX00.bin");
+	//create_new_tab("g/GFX00.bin");
+	create_new_tab("bank26-gsu.bin");
 #endif
 }
 

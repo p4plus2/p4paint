@@ -7,14 +7,16 @@
 #include "image_editor.h"
 #include "utility.h"
 #include "graphics_formats/abstract_format.h"
-#include "graphics_formats/format_4bpp.h"
+
+#include "graphics_formats/format_gsu.h"
 
 canvas::canvas(QByteArray *b, image_editor *parent) :
         QWidget(parent)
 {
 	buffer = b;
 	
-	abstract_format *format = new format_4bpp(buffer);
+	//abstract_format *format = new format_4bpp(buffer);
+	abstract_format *format = new format_gsu(buffer);
 	tile_count = format->max_tiles();
 	tiles = format->get_tiles(0, tile_count);
 	setMinimumWidth(x_tiles * tile_width * scale);

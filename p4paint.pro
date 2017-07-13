@@ -26,7 +26,8 @@ SOURCES += main.cpp\
     menus/history_menu_item.cpp \
     image_editor.cpp \
     graphics_formats/format_4bpp.cpp \
-    graphics_formats/abstract_format.cpp
+    graphics_formats/abstract_format.cpp \
+    graphics_formats/format_gsu.cpp
 
 HEADERS  += main_window.h \
     debug.h \
@@ -47,7 +48,8 @@ HEADERS  += main_window.h \
     image_editor.h \
     graphics_formats/format_4bpp.h \
     graphics_formats/abstract_format.h \
-    tile_data.h
+    tile_data.h \
+    graphics_formats/format_gsu.h
 
 OTHER_FILES += \
     version.sh
