@@ -6,6 +6,7 @@
 #include "tile_data.h"
 
 class image_editor;
+class abstract_format;
 
 class canvas : public QWidget
 {
@@ -14,6 +15,7 @@ class canvas : public QWidget
 		explicit canvas(QByteArray *b, image_editor *parent = 0);
 		void scroll_tiles(int delta);
 		void set_scale(int scale_factor);
+		void set_format(abstract_format *f);
 		
 	protected:
 		void paintEvent(QPaintEvent *event);
@@ -24,6 +26,8 @@ class canvas : public QWidget
 	
 	private:
 		QByteArray *buffer;
+		
+		abstract_format *format;
 		QVector<tile_data> tiles;
 		int tile_count = 0;
 		int offset_y = 0;

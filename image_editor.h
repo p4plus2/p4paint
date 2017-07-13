@@ -6,8 +6,10 @@
 #include <QUndoGroup>
 #include <QFile>
 #include <QPushButton>
+#include <QMap>
 
 class canvas;
+class abstract_format;
 
 class image_editor : public QWidget
 {
@@ -48,6 +50,7 @@ class image_editor : public QWidget
 		int save_state = 0;
 		QUndoStack *undo_stack;
 		QByteArray buffer;
+		QMap<QString, abstract_format *> formats;
 		
 		void update_save_state(int direction);
 };

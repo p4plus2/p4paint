@@ -14,8 +14,8 @@ canvas::canvas(QByteArray *b, image_editor *parent) :
 {
 	buffer = b;
 	
-	tile_count = buffer->size()/0x20;
 	abstract_format *format = new format_4bpp(buffer);
+	tile_count = format->max_tiles();
 	tiles = format->get_tiles(0, tile_count);
 	setMinimumWidth(x_tiles * tile_width * scale);
 }

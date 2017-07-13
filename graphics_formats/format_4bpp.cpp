@@ -25,6 +25,11 @@ tile_data format_4bpp::get_tile(int offset)
 	return {0, image};
 }
 
+int format_4bpp::max_tiles()
+{
+	return buffer->size() / 0x20;
+}
+
 QVector<tile_data>format_4bpp::get_tiles(int offset, int count)
 {
 	QVector<tile_data> tiles;

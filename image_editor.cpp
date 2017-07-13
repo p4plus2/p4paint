@@ -2,6 +2,7 @@
 #include <QMenu>
 #include <QUndoStack>
 
+#include "graphics_formats/abstract_format.h"
 #include "image_editor.h"
 #include "canvas.h"
 
@@ -39,6 +40,10 @@ image_editor::image_editor(QWidget *parent, QString file_name, QUndoGroup *undo_
 	scroll_layout->addWidget(tile_down, Qt::AlignBottom);
 	scroll_layout->addWidget(page_down, Qt::AlignBottom);
 	
+	QVector<format_factory *> factories = format_list->get_factories();
+	for(auto factory : factories){
+		formats.insert(factory->name, factory->get_format(&buffer));
+	}
 	
 	QGridLayout *layout = new QGridLayout();
 	layout->addWidget(draw_area, 0, 0);
