@@ -15,7 +15,7 @@ class canvas : public QWidget
 		explicit canvas(QByteArray *b, image_editor *parent = 0);
 		void scroll_tiles(int delta);
 		void set_scale(int scale_factor);
-		void set_format(abstract_format *f);
+		void set_format(abstract_format *image_format);
 		
 	protected:
 		void paintEvent(QPaintEvent *event);
@@ -38,8 +38,8 @@ class canvas : public QWidget
 		QPoint mouse_current;
 		QPoint mouse_release;
 		
-		const int y_tiles = 32;
-		const int x_tiles = 32;
+		int y_tiles = 32;
+		int x_tiles = 32;
 		const int tile_width = 8;
 		const int tile_height = 8;
 		

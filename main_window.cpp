@@ -52,6 +52,7 @@ main_window::main_window(QWidget *parent)
 	connect(tab_widget, &QTabWidget::currentChanged, this, &main_window::changed_tab);
 	menu_controller->connect_to_widget(this, WINDOW_EVENT);
 	menu_controller->connect_to_widget(dialog_controller, DIALOG_EVENT);
+	
 #ifdef USE_DEFAULT_IMAGE
 	//create_new_tab("g/GFX00.bin");
 	create_new_tab("bank26-gsu.bin");

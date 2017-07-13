@@ -2,6 +2,16 @@
 
 #include <QDebug>
 
+int format_gsu::default_x_tiles()
+{
+	return 32;
+}
+
+int format_gsu::default_y_tiles()
+{
+	return 32;
+}
+
 tile_data format_gsu::get_tile(int offset)
 {
 	QImage image(8, 8, QImage::Format_Indexed8);

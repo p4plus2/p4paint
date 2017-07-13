@@ -1,9 +1,18 @@
 #include "format_4bpp.h"
 #include <QDebug>
 
+int format_4bpp::default_x_tiles()
+{
+	return 16;
+}
+
+int format_4bpp::default_y_tiles()
+{
+	return 16;
+}
+
 tile_data format_4bpp::get_tile(int offset)
 {
-	qDebug() << buffer->size();
 	QImage image(8, 8, QImage::Format_Indexed8);
 	image.setColorTable({0xFFFFFFFF, 0xFFFF0000, 0xFF00FF00, 0xFF0000FF,
 	                     0xFFCCCCCC, 0xFFCC0000, 0xFF00CC00, 0xFF0000CC, 

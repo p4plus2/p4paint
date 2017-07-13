@@ -1,10 +1,12 @@
 #include <QGridLayout>
 #include <QMenu>
 #include <QUndoStack>
+#include <QDebug>
 
 #include "graphics_formats/abstract_format.h"
 #include "image_editor.h"
 #include "canvas.h"
+#include "utility.h"
 
 image_editor::image_editor(QWidget *parent, QString file_name, QUndoGroup *undo_group, bool new_file) :
         QWidget(parent)
@@ -26,7 +28,7 @@ image_editor::image_editor(QWidget *parent, QString file_name, QUndoGroup *undo_
 	connect(this, &image_editor::customContextMenuRequested, this, &image_editor::context_menu);
 	
 	draw_area = new canvas(&buffer, this);
-	draw_area->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+	draw_area->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 	
 	connect(tile_up, &QPushButton::clicked, [=](bool){ draw_area->scroll_tiles(-1); });
 	connect(page_up, &QPushButton::clicked, [=](bool){ draw_area->scroll_tiles(-16); });
@@ -43,11 +45,16 @@ image_editor::image_editor(QWidget *parent, QString file_name, QUndoGroup *undo_
 	QVector<format_factory *> factories = format_list->get_factories();
 	for(auto factory : factories){
 		formats.insert(factory->name, factory->get_format(&buffer));
+		format_selection->addItem(factory->name);
 	}
+	
+	connect(format_selection, resolve<int>::from(&QComboBox::activated), this, &image_editor::change_format);
+	change_format(0); //set a default format
 	
 	QGridLayout *layout = new QGridLayout();
 	layout->addWidget(draw_area, 0, 0);
 	layout->addLayout(scroll_layout, 0, 1, 1, 1, Qt::AlignRight);
+	layout->addWidget(format_selection, 1, 0);
 	setLayout(layout);
 }
 
@@ -84,6 +91,13 @@ void image_editor::save(QString path)
 bool image_editor::new_file()
 {
 	return is_new;
+}
+
+void image_editor::change_format(int a)
+{
+	Q_UNUSED(a);
+	draw_area->set_format(formats[format_selection->currentText()]);
+	adjustSize();
 }
 
 void image_editor::context_menu(const QPoint& position)

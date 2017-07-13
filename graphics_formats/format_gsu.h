@@ -7,6 +7,8 @@ class format_gsu : public abstract_format
 {
 	public:
 		using abstract_format::abstract_format;
+		virtual int default_x_tiles();
+		virtual int default_y_tiles();
 		virtual int max_tiles();
 		virtual tile_data get_tile(int offset);
 		virtual QVector<tile_data>get_tiles(int offset, int count);

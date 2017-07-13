@@ -7,6 +7,7 @@
 #include <QFile>
 #include <QPushButton>
 #include <QMap>
+#include <QComboBox>
 
 class canvas;
 class abstract_format;
@@ -27,6 +28,8 @@ class image_editor : public QWidget
 		bool can_save();
 		void save(QString path);
 		bool new_file();
+		
+		void change_format(int a);
 		
 		void context_menu(const QPoint& position);
 	signals:
@@ -51,6 +54,7 @@ class image_editor : public QWidget
 		QUndoStack *undo_stack;
 		QByteArray buffer;
 		QMap<QString, abstract_format *> formats;
+		QComboBox *format_selection = new QComboBox(this);
 		
 		void update_save_state(int direction);
 };

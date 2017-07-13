@@ -9,6 +9,8 @@ class abstract_format
 {
 	public:
 		abstract_format(const QByteArray *b);
+		virtual int default_x_tiles() = 0;
+		virtual int default_y_tiles() = 0;
 		virtual int max_tiles() = 0;
 		virtual tile_data get_tile(int offset) = 0;
 		virtual QVector<tile_data>get_tiles(int offset, int count) = 0;
