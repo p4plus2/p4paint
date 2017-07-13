@@ -9,7 +9,7 @@ int format_gsu::default_x_tiles()
 
 int format_gsu::default_y_tiles()
 {
-	return 32;
+	return 16;
 }
 
 tile_data format_gsu::get_tile(int offset)

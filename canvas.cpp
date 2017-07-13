@@ -17,7 +17,7 @@ canvas::canvas(QByteArray *b, image_editor *parent) :
 void canvas::scroll_tiles(int delta)
 {
 	offset_y += delta;
-	offset_y = clamp(offset_y, 0, qMax(tile_count-256, 0));
+	offset_y = clamp(offset_y, 0, qMax((tile_count-x_tiles*y_tiles)/x_tiles, 0));
 	update();
 }
 
