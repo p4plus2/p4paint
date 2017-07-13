@@ -17,6 +17,10 @@ class canvas : public QWidget
 		
 	protected:
 		void paintEvent(QPaintEvent *event);
+		
+		void mousePressEvent(QMouseEvent *event);
+		void mouseMoveEvent(QMouseEvent *event);
+		void mouseReleaseEvent(QMouseEvent *event);
 	
 	private:
 		QByteArray *buffer;
@@ -24,6 +28,11 @@ class canvas : public QWidget
 		int tile_count = 0;
 		int offset_y = 0;
 		int scale = 4;
+		
+		bool mouse_held;
+		QPoint mouse_press;
+		QPoint mouse_current;
+		QPoint mouse_release;
 		
 		const int y_tiles = 16;
 		const int x_tiles = 16;

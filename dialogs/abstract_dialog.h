@@ -36,7 +36,7 @@ struct dialog_factory
 		}
 		name = n;
 		dialog_list->add_factory(this);
-	};
+	}
 	virtual abstract_dialog *get_dialog(QWidget *parent) = 0;
 	
 	QString name;

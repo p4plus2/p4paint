@@ -1,6 +1,7 @@
 #include <QPainter>
 #include <QBrush>
 #include <QDebug>
+#include <QMouseEvent>
 
 #include "canvas.h"
 #include "image_editor.h"
@@ -43,5 +44,32 @@ void canvas::paintEvent(QPaintEvent *event)
 			QImage image = tiles[y * x_tiles + x].image.scaled(tile_width * scale, tile_height * scale);
 			painter.drawImage(x * tile_width * scale, (y - offset_y) * tile_height * scale, image);
 		}
+	}
+}
+
+void canvas::mousePressEvent(QMouseEvent *event)
+{
+	if(event->buttons() & Qt::LeftButton){
+		event->accept();
+		mouse_held = true;
+		mouse_press = event->pos();
+		mouse_current = event->pos();
+	}
+}
+
+void canvas::mouseMoveEvent(QMouseEvent *event)
+{
+	if(mouse_held){
+		event->accept();
+		mouse_current = event->pos();
+	}
+}
+
+void canvas::mouseReleaseEvent(QMouseEvent *event)
+{
+	if(event->buttons() & Qt::LeftButton && mouse_held){
+		event->accept();
+		mouse_release = event->pos();
+		mouse_current = event->pos();
 	}
 }

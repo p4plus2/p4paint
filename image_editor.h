@@ -41,7 +41,7 @@ class image_editor : public QWidget
 		QPushButton *page_up = new QPushButton("\u219F", this);
 		QPushButton *tile_up = new QPushButton("\u2191", this);
 		QPushButton *page_down = new QPushButton("\u21A1", this);
-		QPushButton *tile_down = new QPushButton("\u52193", this);
+		QPushButton *tile_down = new QPushButton("\u2193", this);
 		
 		QFile image_file;
 		bool is_new;
