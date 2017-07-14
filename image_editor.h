@@ -43,10 +43,10 @@ class image_editor : public QWidget
 	private:
 		canvas *draw_area;
 		
-		QPushButton *page_up = new QPushButton("\u219F", this);
-		QPushButton *tile_up = new QPushButton("\u2191", this);
-		QPushButton *page_down = new QPushButton("\u21A1", this);
-		QPushButton *tile_down = new QPushButton("\u2193", this);
+		QPushButton *page_up = new QPushButton(QChar(u'\u219F'), this);
+		QPushButton *tile_up = new QPushButton(QChar(u'\u2191'), this);
+		QPushButton *page_down = new QPushButton(QChar(u'\u21A1'), this);
+		QPushButton *tile_down = new QPushButton(QChar(u'\u2193'), this);
 		
 		QFile image_file;
 		bool is_new;
