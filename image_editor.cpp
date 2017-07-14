@@ -128,7 +128,7 @@ void image_editor::wheelEvent(QWheelEvent *event)
 
 bool image_editor::event(QEvent *event)
 {
-	
+	return false;
 }
 
 void image_editor::update_save_state(int direction)
