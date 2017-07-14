@@ -14,8 +14,6 @@
 #include "image_editor.h"
 #include "utility.h"
 
-#define USE_DEFAULT_IMAGE
-
 main_window::main_window(QWidget *parent)
         : QMainWindow(parent)
 {
@@ -54,7 +52,7 @@ main_window::main_window(QWidget *parent)
 	menu_controller->connect_to_widget(dialog_controller, DIALOG_EVENT);
 	setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
 	window()->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
-#ifdef USE_DEFAULT_IMAGE
+#ifdef USE_DEFAULT_BIN
 	//create_new_tab("g/GFX00.bin");
 	create_new_tab("bank26-gsu.bin");
 #endif

@@ -9,7 +9,7 @@
 	#define LOG_TO_FILE
 #endif
 
-#if 1
+#if __linux__
 	#define USE_DEFAULT_BIN
 #endif
 

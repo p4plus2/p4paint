@@ -24,6 +24,6 @@ struct format_gsu_factory : public format_factory
 	virtual abstract_format *get_format(const QByteArray *b) { return new format_gsu(b); }
 };
 
-static const char *format_name = "GSU (YI) SNES";
+static const char *format_name = "GSU SNES";
 static format_gsu_factory factory(format_name);
 #endif // FORMAT_GSU_H
