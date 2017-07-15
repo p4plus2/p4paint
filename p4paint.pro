@@ -24,9 +24,9 @@ SOURCES += main.cpp\
     menus/abstract_menu_item.cpp \
     menus/history_menu_item.cpp \
     image_editor.cpp \
-    graphics_formats/format_4bpp.cpp \
     graphics_formats/abstract_format.cpp \
-    graphics_formats/format_gsu.cpp
+    graphics_formats/format_gsu.cpp \
+    graphics_formats/format_planar.cpp
 
 HEADERS  += main_window.h \
     debug.h \
@@ -45,10 +45,10 @@ HEADERS  += main_window.h \
     version.h \
     utility.h \
     image_editor.h \
-    graphics_formats/format_4bpp.h \
     graphics_formats/abstract_format.h \
     tile_data.h \
-    graphics_formats/format_gsu.h
+    graphics_formats/format_gsu.h \
+    graphics_formats/format_planar.h
 
 OTHER_FILES += \
     version.sh
