@@ -8,6 +8,8 @@
 #include "utility.h"
 #include "graphics_formats/abstract_format.h"
 
+#include "palette_editor.h"
+
 canvas::canvas(QByteArray *b, image_editor *parent) :
         QWidget(parent)
 {
@@ -39,6 +41,11 @@ void canvas::set_format(abstract_format *image_format)
 	
 	tile_count = format->max_tiles();
 	tiles = format->get_tiles(0, tile_count);
+	
+	palette_editor p(nullptr);
+	for(auto &tile : tiles){
+		tile.image.setColorTable(p.get_color_table());
+	}
 	
 	set_scale(scale);
 }

@@ -15,11 +15,7 @@ int format_gsu::default_y_tiles()
 tile_data format_gsu::get_tile(int offset)
 {
 	QImage image(8, 8, QImage::Format_Indexed8);
-	QVector<QRgb> colors;
-	for(int i = 0; i < 256; i++){
-		colors.append(0xFF000000 | ((i * 940179 + i) + (i * 53545) + (i * 15)));
-	}
-	image.setColorTable(colors);
+	image.setColorCount(get_color_depth());
 	for(int row = 0; row < 8; row++){
 		for(int column = 0; column < 8; column++){
 			unsigned int real_offset = offset >= buffer->size() ? offset - buffer->size() : offset;

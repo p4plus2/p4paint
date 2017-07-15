@@ -27,7 +27,8 @@ SOURCES += main.cpp\
     graphics_formats/abstract_format.cpp \
     graphics_formats/format_gsu.cpp \
     graphics_formats/format_planar.cpp \
-    graphics_formats/format_linear.cpp
+    graphics_formats/format_linear.cpp \
+    palette_editor.cpp
 
 HEADERS  += main_window.h \
     debug.h \
@@ -50,7 +51,8 @@ HEADERS  += main_window.h \
     tile_data.h \
     graphics_formats/format_gsu.h \
     graphics_formats/format_planar.h \
-    graphics_formats/format_linear.h
+    graphics_formats/format_linear.h \
+    palette_editor.h
 
 OTHER_FILES += \
     version.sh

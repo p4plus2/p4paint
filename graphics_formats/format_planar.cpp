@@ -17,11 +17,7 @@ template <int BIT_DEPTH>
 tile_data format_planar<BIT_DEPTH>::get_tile(int offset)
 {
 	QImage image(8, 8, QImage::Format_Indexed8);
-	QVector<QRgb> colors;
-	for(int i = 0; i < get_color_depth(); i++){
-		colors.append(0xFF000000 | ((i * 940179 + i) + (i * 53545) + (i * 15)));
-	}
-	image.setColorTable(colors);
+	image.setColorCount(get_color_depth());
 	for(int row = 0; row < 8; row++){
 		unsigned char bytes[BIT_DEPTH];
 		for(int i = 0; i < BIT_DEPTH; i++){
