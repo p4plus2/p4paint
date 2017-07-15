@@ -42,7 +42,7 @@ QVector<tile_data>format_linear::get_tiles(int offset, int count)
 
 	for(int i = 0; i < count; i++){
 		tiles.append(get_tile(offset));
-		offset += 0x40;
+		offset += tile_size;
 		//offset += 0x08;
 		//if(i && (i + 1) % 16 == 0){
 		//	offset += 0x380;
