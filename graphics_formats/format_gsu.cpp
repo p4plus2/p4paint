@@ -23,7 +23,7 @@ tile_data format_gsu::get_tile(int offset)
 	for(int row = 0; row < 8; row++){
 		for(int column = 0; column < 8; column++){
 			unsigned int real_offset = offset >= buffer->size() ? offset - buffer->size() : offset;
-			unsigned char pixel = buffer->at(row * 0x100 + real_offset + column);
+			unsigned char pixel = get_byte(row * 0x100 + real_offset + column);
 			if(offset > buffer->size()){
 				pixel >>= 4;
 			}

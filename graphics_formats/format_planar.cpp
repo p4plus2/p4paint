@@ -25,7 +25,7 @@ tile_data format_planar<BIT_DEPTH>::get_tile(int offset)
 	for(int row = 0; row < 8; row++){
 		unsigned char bytes[8];
 		for(int i = 0; i < BIT_DEPTH; i++){
-			bytes[i] = buffer->at(row * 0x2 + offset + (i & 1) + ((i & 0xFE) << 3));
+			bytes[i] = get_byte(row * 0x2 + offset + (i & 1) + ((i & 0xFE) << 3));
 		}
 		
 		for(int bit = 7; bit >= 0; bit--){

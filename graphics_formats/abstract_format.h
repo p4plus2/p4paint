@@ -18,6 +18,7 @@ class abstract_format
 		
 	protected:
 		const QByteArray *buffer;
+		unsigned char get_byte(int offset);
 };
 
 struct format_factory;

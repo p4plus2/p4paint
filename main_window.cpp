@@ -54,7 +54,8 @@ main_window::main_window(QWidget *parent)
 	window()->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
 #ifdef USE_DEFAULT_BIN
 	//create_new_tab("g/GFX00.bin");
-	create_new_tab("bank26-gsu.bin");
+	//create_new_tab("bank26-gsu.bin");
+	create_new_tab("mode_7.bin");
 #endif
 }
 
