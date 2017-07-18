@@ -1,36 +1,51 @@
 #include <QPushButton>
 #include <QFile>
 #include <QColor>
+#include <QGridLayout>
+#include <QDebug>
 
+#include "palette_manager.h"
 #include "palette_editor.h"
+#include "palette_container.h"
 
 QColor pc_to_snes(unsigned char low, unsigned char high)
 {
 	return {(low & 0x1F) << 3, ((low | (high << 8)) >> 5 & 0x1F) << 3, (low >> 2 & 0x1F) << 3};
 }
 
-palette_editor::palette_editor(QWidget *parent)
+palette_editor::palette_editor(QWidget *parent, QString file, palette_manager *controller, bool new_file)
         : QWidget(parent)
 {
 	QFile palette_file;
-	palette_file.setFileName("mode_7p.bin");
+	palette_file.setFileName(file);
 	palette_file.open(QFile::ReadWrite);
 	QByteArray buffer = palette_file.readAll();
 	
+	palette_controller = controller;
+	is_new = new_file;
+	
+	QGridLayout *layout = new QGridLayout();
+	palette_container palette;
+	
 	for(int i = 0; i < 256; i++){
 		swatches[i] = new QPushButton(this);
+		swatches[i]->setAutoFillBackground(true);
 		swatches[i]->setFlat(true);
+		swatches[i]->setMaximumSize(16, 16);
+		swatches[i]->setMinimumSize(16, 16);
 		
-		QColor color = pc_to_snes(buffer.at(i * 2), buffer.at(i * 2 + 1));
-		colors.append(color.rgba());
+		palette.set_color_snes(256, 0, i, (buffer.at(i * 2) & 0xFF) | (buffer.at(i * 2 + 1) << 8));
 		
-		QPalette palette;
-		palette.setColor(QPalette::Button, color);
-		swatches[i]->setPalette(palette);
+		QPalette button_palette;
+		button_palette.setColor(QPalette::Button, palette.get_color_pc(256, 0, i));
+		swatches[i]->setPalette(button_palette);
+		layout->addWidget(swatches[i], i >> 4, i & 0x0F, 1, 1, Qt::AlignTop);
 	}
-}
-
-QVector<QRgb> palette_editor::get_color_table()
-{
-	return colors;
+	layout->addItem(new QSpacerItem(0, 0, QSizePolicy::Expanding), 0, 16, Qt::AlignTop);
+	layout->setSpacing(0);
+	layout->setContentsMargins(0, 0, 0, 0);	
+	setLayout(layout);
+	
+	colors = palette.get_subpalette(256, 0);
+	palette_controller->register_palette(palette);
 }

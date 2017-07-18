@@ -5,11 +5,12 @@
 
 #include "graphics_formats/abstract_format.h"
 #include "image_editor.h"
+#include "palette_manager.h"
 #include "canvas.h"
 #include "utility.h"
 
-image_editor::image_editor(QWidget *parent, QString file_name, QUndoGroup *undo_group, bool new_file) :
-        QWidget(parent)
+image_editor::image_editor(QWidget *parent, QString file_name, QUndoGroup *undo_group, 
+                           palette_manager *controller, bool new_file) : QWidget(parent)
 {
 	is_new = new_file;
 	
@@ -24,10 +25,12 @@ image_editor::image_editor(QWidget *parent, QString file_name, QUndoGroup *undo_
 	undo_stack = new QUndoStack(undo_group);
 	undo_stack->setActive();
 	
+	palette_controller = controller;
+	
 	setContextMenuPolicy(Qt::CustomContextMenu);
 	connect(this, &image_editor::customContextMenuRequested, this, &image_editor::context_menu);
 	
-	draw_area = new canvas(&buffer, this);
+	draw_area = new canvas(this, &buffer, palette_controller);
 	draw_area->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
 	
 	connect(tile_up, &QPushButton::clicked, [=](bool){ draw_area->scroll_tiles(-1); });

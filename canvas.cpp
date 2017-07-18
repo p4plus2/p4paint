@@ -8,12 +8,14 @@
 #include "utility.h"
 #include "graphics_formats/abstract_format.h"
 
-#include "palette_editor.h"
+#include "palette_container.h"
+#include "palette_manager.h"
 
-canvas::canvas(QByteArray *b, image_editor *parent) :
+canvas::canvas(image_editor *parent, QByteArray *b, palette_manager *controller) :
         QWidget(parent)
 {
 	buffer = b;
+	palette_controller = controller;
 }
 
 void canvas::scroll_tiles(int delta)
@@ -42,9 +44,9 @@ void canvas::set_format(abstract_format *image_format)
 	tile_count = format->max_tiles();
 	tiles = format->get_tiles(0, tile_count);
 	
-	palette_editor p(nullptr);
+	palette_container palette = palette_controller->get_palette(0);
 	for(auto &tile : tiles){
-		tile.image.setColorTable(p.get_color_table());
+		tile.image.setColorTable(palette.get_subpalette(256, 0));
 	}
 	
 	set_scale(scale);

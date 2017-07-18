@@ -11,12 +11,14 @@
 
 class canvas;
 class abstract_format;
+class palette_manager;
 
 class image_editor : public QWidget
 {
 	Q_OBJECT
 	public:
-		explicit image_editor(QWidget *parent, QString file_name, QUndoGroup *undo_group, bool new_file = false);
+		explicit image_editor(QWidget *parent, QString file_name, 
+		                      QUndoGroup *undo_group, palette_manager *controller, bool new_file = false);
 		~image_editor();
 		
 		QString load_error();
@@ -41,7 +43,9 @@ class image_editor : public QWidget
 		virtual bool event(QEvent *event);
 
 	private:
-		canvas *draw_area;
+		canvas *draw_area = nullptr;
+		palette_manager *palette_controller = nullptr;
+		QUndoStack *undo_stack = nullptr;
 		
 		QPushButton *page_up = new QPushButton(QChar(u'\u219F'), this);
 		QPushButton *tile_up = new QPushButton(QChar(u'\u2191'), this);
@@ -51,7 +55,6 @@ class image_editor : public QWidget
 		QFile image_file;
 		bool is_new;
 		int save_state = 0;
-		QUndoStack *undo_stack;
 		QByteArray buffer;
 		QMap<QString, abstract_format *> formats;
 		QComboBox *format_selection = new QComboBox(this);

@@ -12,6 +12,7 @@
 #include "settings_manager.h"
 #include "version.h"
 #include "image_editor.h"
+#include "palette_editor.h"
 #include "utility.h"
 
 main_window::main_window(QWidget *parent)
@@ -20,12 +21,16 @@ main_window::main_window(QWidget *parent)
 	statusBar()->addWidget(statusbar);
 	
 	QWidget* widget = new QWidget(this);
-	QHBoxLayout *tab_layout = new QHBoxLayout(widget);
+	QVBoxLayout *tab_layout = new QVBoxLayout(widget);
 	tab_layout->addWidget(tab_widget);
+	tab_layout->addWidget(palette_tab_widget);
 	widget->setLayout(tab_layout);
 	setCentralWidget(widget);
+	
 	tab_widget->setTabsClosable(true);
 	tab_widget->setMovable(true);
+	palette_tab_widget->setTabsClosable(true);
+	palette_tab_widget->setMovable(true);	
 	
 	settings_manager settings;
 	QVariant geometry = settings.get("geometry");
@@ -56,6 +61,7 @@ main_window::main_window(QWidget *parent)
 	//create_new_tab("g/GFX00.bin");
 	//create_new_tab("bank26-gsu.bin");
 	create_new_tab("mode_7.bin");
+	create_new_palette_tab("mode_7p.bin");
 #endif
 }
 
@@ -210,7 +216,7 @@ void main_window::create_new_tab(QString name, bool new_file)
 {
 	QWidget *widget = new QWidget(this);
 	QSize window_size = size();
-	image_editor *editor = new image_editor(widget, name, undo_group, new_file);
+	image_editor *editor = new image_editor(widget, name, undo_group, palette_controller, new_file);
 	if(editor->load_error() != ""){
 		QMessageBox::critical(this, "Invalid ROM", editor->load_error(), QMessageBox::Ok);
 		delete editor;
@@ -228,6 +234,24 @@ void main_window::create_new_tab(QString name, bool new_file)
 	tab_widget->setCurrentWidget(widget);
 	editor->set_focus();
 	editor->update_window();
+	resize(window_size);
+}
+
+void main_window::create_new_palette_tab(QString name, bool new_file)
+{
+	QSize window_size = size();
+	palette_editor *editor = new palette_editor(palette_tab_widget, name, palette_controller, new_file);
+	//if(editor->load_error() != ""){
+	//	QMessageBox::critical(this, "Invalid ROM", editor->load_error(), QMessageBox::Ok);
+	//	delete editor;
+	//	return;
+	//}
+	
+	//connect(editor, &palette_editor::save_state_changed, this, &main_window::file_save_state);
+	
+	palette_tab_widget->addTab(editor, QFileInfo(name).fileName());
+	palette_tab_widget->setCurrentWidget(editor);
+	
 	resize(window_size);
 }
 

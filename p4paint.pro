@@ -28,7 +28,9 @@ SOURCES += main.cpp\
     graphics_formats/format_gsu.cpp \
     graphics_formats/format_planar.cpp \
     graphics_formats/format_linear.cpp \
-    palette_editor.cpp
+    palette_editor.cpp \
+    palette_manager.cpp \
+    palette_container.cpp
 
 HEADERS  += main_window.h \
     debug.h \
@@ -52,7 +54,9 @@ HEADERS  += main_window.h \
     graphics_formats/format_gsu.h \
     graphics_formats/format_planar.h \
     graphics_formats/format_linear.h \
-    palette_editor.h
+    palette_editor.h \
+    palette_manager.h \
+    palette_container.h
 
 OTHER_FILES += \
     version.sh
