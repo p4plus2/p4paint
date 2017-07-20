@@ -21,12 +21,18 @@ class main_window : public QMainWindow
 		~main_window();
 		
 	public slots:
-		bool close_tab(int i);
-		void changed_tab(int i);
-		void file_save_state(bool clean);
-		void new_file();
-		void open();
-		bool save(bool override_name = false, int target = -1);
+		bool close_image(int i);
+		bool close_palette(int i);
+		void changed_image(int i);
+		void changed_palette(int i);
+		void image_save_state(bool clean);
+		void palette_save_state(bool clean);
+		void new_image();
+		void new_palette();
+		void open_image();
+		void open_palette();
+		bool save_image(bool override_name = false, int target = -1);
+		bool save_palette(bool override_name = false, int target = -1);
 		
 	protected:
 		virtual bool event(QEvent *event);
@@ -43,8 +49,8 @@ class main_window : public QMainWindow
 		int new_counter = 0;
 		QString last_directory;
 
-		void create_new_tab(QString name, bool new_file = false);
-		void create_new_palette_tab(QString name, bool new_file = false);
+		void create_new_tab(QString name, bool new_image = false);
+		void create_new_palette_tab(QString name, bool new_image = false);
 		image_editor *get_editor(int i) const;
 		
 };

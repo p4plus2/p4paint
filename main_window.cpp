@@ -51,8 +51,8 @@ main_window::main_window(QWidget *parent)
 		last_directory = QDir::homePath();
 	}
 	
-	connect(tab_widget, &QTabWidget::tabCloseRequested, this, &main_window::close_tab);
-	connect(tab_widget, &QTabWidget::currentChanged, this, &main_window::changed_tab);
+	connect(tab_widget, &QTabWidget::tabCloseRequested, this, &main_window::close_image);
+	connect(tab_widget, &QTabWidget::currentChanged, this, &main_window::changed_image);
 	menu_controller->connect_to_widget(this, WINDOW_EVENT);
 	menu_controller->connect_to_widget(dialog_controller, DIALOG_EVENT);
 	setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
@@ -75,7 +75,7 @@ image_editor *main_window::get_active_editor()
 }
 
 
-bool main_window::close_tab(int i)
+bool main_window::close_image(int i)
 {
 	image_editor *editor = get_editor(i);
 	if(editor->can_save()){
@@ -85,7 +85,7 @@ bool main_window::close_tab(int i)
 		                              message::Yes | message::No | message::Cancel, message::Yes);
 		switch(button){
 			case message::Yes:
-				if(!save(i)){
+				if(!save_image(i)){
 					return false;
 				}
 				
@@ -103,7 +103,12 @@ bool main_window::close_tab(int i)
 	return true;
 }
 
-void main_window::changed_tab(int i)
+bool main_window::close_palette(int i)
+{
+	
+}
+
+void main_window::changed_image(int i)
 {
 	if(i == -1){
 		dialog_controller->set_active_editor(nullptr);
@@ -118,7 +123,12 @@ void main_window::changed_tab(int i)
 	menu_controller->connect_to_widget(editor, EDITOR_EVENT);
 }
 
-void main_window::file_save_state(bool clean)
+void main_window::changed_palette(int i)
+{
+	
+}
+
+void main_window::image_save_state(bool clean)
 {
 	image_editor *editor = get_editor(tab_widget->currentIndex());
 	if(clean){
@@ -128,13 +138,23 @@ void main_window::file_save_state(bool clean)
 	}
 }
 
-void main_window::new_file()
+void main_window::palette_save_state(bool clean)
+{
+	
+}
+
+void main_window::new_image()
 {
 	new_counter++;
 	create_new_tab("Untitled_"+QString::number(new_counter), true);
 }
 
-void main_window::open()
+void main_window::new_palette()
+{
+	
+}
+
+void main_window::open_image()
 {
 	QString file_types = "Typical files (*.bin *.smc *.sfc);;All files(*.*)";
 	QStringList file_list = QFileDialog::getOpenFileNames(this, "Open file(s)", last_directory, file_types);
@@ -147,7 +167,12 @@ void main_window::open()
 	}
 }
 
-bool main_window::save(bool override_name, int target)
+void main_window::open_palette()
+{
+	
+}
+
+bool main_window::save_image(bool override_name, int target)
 {
 	image_editor *editor = (target != -1 ) ? get_editor(target) : get_editor(tab_widget->currentIndex());
 	QString name = "";
@@ -163,43 +188,44 @@ bool main_window::save(bool override_name, int target)
 	return true;
 }
 
+bool main_window::save_palette(bool override_name, int target)
+{
+	
+}
+
 bool main_window::event(QEvent *event)
 {
 	if(event->type() != (QEvent::Type)WINDOW_EVENT){
 		return QWidget::event(event);
 	}
+
 	switch(((window_event *)event)->sub_type()){
-		case NEW:
-			new_file();
-			return true;
-	        case OPEN:
-			open();
-			return true;
-	        case SAVE:
-			save();
-			return true;
-	        case SAVE_AS:
-			save(true);
-			return true;
-	        case CLOSE_TAB:
-			close_tab(tab_widget->currentIndex());
-			return true;
-	        case CLOSE:
-			close();
-			return true;
-	        case VERSION:
-			display_version_dialog();
-			return true;
+		#define CASE(V, C, ...) case V: C(__VA_ARGS__); return true
+		
+		CASE(NEW_IMAGE, new_image);
+		CASE(NEW_PALETTE, new_palette);
+	        CASE(OPEN_IMAGE,open_image);
+		CASE(OPEN_PALETTE, open_palette);
+	        CASE(SAVE_IMAGE, save_image);
+		CASE(SAVE_PALETTE, save_palette);
+	        CASE(SAVE_IMAGE_AS, save_image, true);
+		CASE(SAVE_PALETTE_AS, save_palette, true);
+	        CASE(CLOSE_IMAGE, close_image, tab_widget->currentIndex());
+		CASE(CLOSE_PALETTE, close_palette, tab_widget->currentIndex());
+	        CASE(CLOSE, close);
+	        CASE(VERSION, display_version_dialog);
 		default:
 			qDebug() << "Bad event" << ((editor_event *)event)->sub_type();
 			return false;
+			
+		#undef CASE
 	}
 }
 
 void main_window::closeEvent(QCloseEvent *event)
 {
 	while(tab_widget->count()){
-		if(!close_tab(0)){
+		if(!close_image(0)){
 			event->setAccepted(false);
 			return;
 		}
@@ -224,7 +250,7 @@ void main_window::create_new_tab(QString name, bool new_file)
 		return;
 	}
 	
-	connect(editor, &image_editor::save_state_changed, this, &main_window::file_save_state);
+	connect(editor, &image_editor::save_state_changed, this, &main_window::image_save_state);
 	
 	QHBoxLayout *editor_layout = new QHBoxLayout(widget);
 	editor_layout->addWidget(editor);

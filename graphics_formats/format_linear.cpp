@@ -24,7 +24,7 @@ tile_data format_linear::get_tile(int offset)
 			image.setPixel(column, row, pixel);
 		}
 	}
-	return {0, image};
+	return {0, 0, image};
 }
 
 int format_linear::max_tiles()

@@ -8,11 +8,6 @@
 #include "palette_editor.h"
 #include "palette_container.h"
 
-QColor pc_to_snes(unsigned char low, unsigned char high)
-{
-	return {(low & 0x1F) << 3, ((low | (high << 8)) >> 5 & 0x1F) << 3, (low >> 2 & 0x1F) << 3};
-}
-
 palette_editor::palette_editor(QWidget *parent, QString file, palette_manager *controller, bool new_file)
         : QWidget(parent)
 {
@@ -46,6 +41,5 @@ palette_editor::palette_editor(QWidget *parent, QString file, palette_manager *c
 	layout->setContentsMargins(0, 0, 0, 0);	
 	setLayout(layout);
 	
-	colors = palette.get_subpalette(256, 0);
-	palette_controller->register_palette(palette);
+	id = palette_controller->register_palette(palette);
 }

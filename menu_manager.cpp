@@ -64,17 +64,23 @@ void menu_manager::create_actions(QUndoGroup *undo_group)
 	#define MENU_TEST(T) image_editor *editor = menu_manager::window->get_active_editor(); \
 			return editor && editor->T
 	toggle_function active_editor    = []() -> bool { return menu_manager::window->get_active_editor(); };
+	toggle_function active_palette    = []() -> bool { return false; };
 	//toggle_function active_selection  = []() -> bool { MENU_TEST(is_selecting()); };
 	//toggle_function clipboard_usable  = []() -> bool { MENU_TEST(is_pasteable()); };
 	#undef MENU_TEST
 	
 	QMenu *menu = find_menu("&File");
-	add_action       <window_event>("&New",     NEW,                    hotkey::New,    menu);
-	add_action       <window_event>("&Open",    OPEN,                   hotkey::Open,   menu);
-	add_toggle_action<window_event>("&Save",    SAVE,    active_editor, hotkey::Save,   menu);
-	add_toggle_action<window_event>("S&ave as", SAVE_AS, active_editor, hotkey::SaveAs, menu);
+	add_action       <window_event>("&New image",      NEW_IMAGE,                       hotkey::New,     menu);
+	add_action       <window_event>("&New palette",    NEW_PALETTE,                     hotkey("Alt+n"), menu);
+	add_action       <window_event>("&Open image",     OPEN_IMAGE,                      hotkey::Open,    menu);
+	add_action       <window_event>("Open &palette",   OPEN_PALETTE,                    hotkey("Alt+o"), menu);
+	add_toggle_action<window_event>("&Save image",     SAVE_IMAGE,      active_editor,  hotkey::Save,    menu);
+	add_toggle_action<window_event>("Save p&alette",   SAVE_PALETTE,    active_palette, hotkey("Alt+s"), menu);
+	add_toggle_action<window_event>("Save image as",   SAVE_IMAGE_AS,   active_editor,  hotkey::SaveAs,  menu);
+	add_toggle_action<window_event>("Save palette as", SAVE_PALETTE_AS, active_palette, hotkey("Ctrl+Alt+s"), menu);
 	menu->addSeparator();
-	add_toggle_action<window_event>("&Close tab", CLOSE_TAB, active_editor, hotkey::Close,  menu);
+	add_toggle_action<window_event>("&Close image",   CLOSE_IMAGE,   active_editor,  hotkey::Close,   menu);
+	add_toggle_action<window_event>("&Close palette", CLOSE_PALETTE, active_palette, hotkey("Alt+w"), menu);
 	add_action       <window_event>("E&xit",      CLOSE,                    hotkey::Quit,   menu);
 }
 

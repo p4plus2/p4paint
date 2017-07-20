@@ -34,7 +34,7 @@ tile_data format_planar<BIT_DEPTH>::get_tile(int offset)
 			image.setPixel(7-bit, row, pixel);
 		}
 	}
-	return {0, image};
+	return {0, 0, image};
 }
 
 template <int BIT_DEPTH>

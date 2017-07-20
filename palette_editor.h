@@ -17,6 +17,7 @@ class palette_editor : public QWidget
 		QPushButton *swatches[256];
 		QVector<QRgb> colors;
 		bool is_new;
+		int id;
 };
 
 #endif // PALETTE_EDITOR_H

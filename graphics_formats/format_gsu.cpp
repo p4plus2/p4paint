@@ -26,7 +26,7 @@ tile_data format_gsu::get_tile(int offset)
 			image.setPixel(column, row, pixel & 0x0F);
 		}
 	}
-	return {0, image};
+	return {0, 0, image};
 }
 
 int format_gsu::max_tiles()

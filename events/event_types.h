@@ -14,11 +14,16 @@ enum editor_events{
 };
 
 enum window_events{
-	NEW = EDITOR_EVENT_MAX+1,
-        OPEN,
-        SAVE,
-        SAVE_AS,
-        CLOSE_TAB,
+	NEW_IMAGE = EDITOR_EVENT_MAX+1,
+	NEW_PALETTE,
+	OPEN_IMAGE,
+	OPEN_PALETTE,
+	SAVE_IMAGE,
+	SAVE_PALETTE,
+	SAVE_IMAGE_AS,
+	SAVE_PALETTE_AS,
+	CLOSE_IMAGE,
+	CLOSE_PALETTE,
         CLOSE,
         VERSION,
 	WINDOW_EVENT_MAX
