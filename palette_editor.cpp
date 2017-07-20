@@ -11,7 +11,6 @@
 palette_editor::palette_editor(QWidget *parent, QString file, palette_manager *controller, bool new_file)
         : QWidget(parent)
 {
-	QFile palette_file;
 	palette_file.setFileName(file);
 	palette_file.open(QFile::ReadWrite);
 	QByteArray buffer = palette_file.readAll();
@@ -42,4 +41,30 @@ palette_editor::palette_editor(QWidget *parent, QString file, palette_manager *c
 	setLayout(layout);
 	
 	id = palette_controller->register_palette(palette);
+}
+
+QString palette_editor::load_error()
+{
+	return "";
+}
+
+QString palette_editor::get_file_name()
+{
+	return palette_file.fileName();
+}
+
+bool palette_editor::new_file()
+{
+	return is_new;
+}
+
+bool palette_editor::can_save()
+{
+	return false;
+}
+
+
+void palette_editor::save(QString path)
+{
+	
 }
