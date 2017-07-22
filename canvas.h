@@ -40,6 +40,8 @@ class canvas : public QWidget
 		QPoint mouse_current;
 		QPoint mouse_release;
 		
+		QPoint clip_to_tile(QPoint point);
+		
 		int y_tiles = 32;
 		int x_tiles = 32;
 		const int tile_width = 8;

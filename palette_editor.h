@@ -17,7 +17,7 @@ class palette_editor : public QWidget
 		bool new_file();
 		bool can_save();		
 		void save(QString path);
-		
+		void set_palette(int id);
 	private:
 		palette_manager *palette_controller;
 		QPushButton *swatches[256];

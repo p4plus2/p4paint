@@ -64,6 +64,11 @@ void canvas::paintEvent(QPaintEvent *event)
 			painter.drawImage(x * tile_width * scale, (y - offset_y) * tile_height * scale, image);
 		}
 	}
+	
+	QPen pen(Qt::white, 1);
+	painter.setPen(pen);
+	QPoint point = clip_to_tile(mouse_current);
+	painter.drawRect(point.x(), point.y(), 8*scale, 8*scale);
 }
 
 void canvas::mousePressEvent(QMouseEvent *event)
@@ -73,6 +78,7 @@ void canvas::mousePressEvent(QMouseEvent *event)
 		mouse_held = true;
 		mouse_press = event->pos();
 		mouse_current = event->pos();
+		update();
 	}
 }
 
@@ -81,6 +87,7 @@ void canvas::mouseMoveEvent(QMouseEvent *event)
 	if(mouse_held){
 		event->accept();
 		mouse_current = event->pos();
+		update();
 	}
 }
 
@@ -90,5 +97,11 @@ void canvas::mouseReleaseEvent(QMouseEvent *event)
 		event->accept();
 		mouse_release = event->pos();
 		mouse_current = event->pos();
+		update();
 	}
+}
+
+QPoint canvas::clip_to_tile(QPoint point)
+{
+	return {(point.x() - point.x() % (scale * 8)), (point.y() - point.y() % (scale * 8))};
 }

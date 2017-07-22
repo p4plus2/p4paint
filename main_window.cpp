@@ -59,6 +59,10 @@ main_window::main_window(QWidget *parent)
 	menu_controller->connect_to_widget(dialog_controller, DIALOG_EVENT);
 	setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
 	window()->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+	create_new_palette_tab("Default", true);
+	palette_editor *default_palette = (palette_editor *)palette_tab_widget->currentWidget();
+	default_palette->set_palette(0);
+	
 #ifdef USE_DEFAULT_BIN
 	//create_new_tab("g/GFX00.bin");
 	//create_new_tab("bank26-gsu.bin");

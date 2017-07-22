@@ -11,8 +11,8 @@ class palette_manager : public QObject
 		Q_OBJECT
 	public:
 		explicit palette_manager(QObject *parent = nullptr);
-		int register_palette(palette_container p);
-		int update_palette(int id, palette_container p);
+		int register_palette(palette_container palette);
+		int update_palette(int id, palette_container palette);
 		palette_container get_palette(int id);
 	
 	private:
