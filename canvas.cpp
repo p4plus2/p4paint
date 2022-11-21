@@ -44,12 +44,22 @@ void canvas::set_format(abstract_format *image_format)
 	tile_count = format->max_tiles();
 	tiles = format->get_tiles(0, tile_count);
 	
-	palette_container palette = palette_controller->get_palette(0);
+	palette_container palette = palette_controller->get_palette(2);
 	for(auto &tile : tiles){
 		tile.image.setColorTable(palette.get_subpalette(256, 0));
 	}
 	
 	set_scale(scale);
+}
+
+void canvas::set_tile_palette(int palette)
+{
+	tiles[position_to_tile(mouse_current)].palette = palette;
+}
+
+void canvas::set_tile_subpalette(int subpalette)
+{
+	tiles[position_to_tile(mouse_current)].subpalette = subpalette;
 }
 
 void canvas::paintEvent(QPaintEvent *event)
@@ -104,4 +114,12 @@ void canvas::mouseReleaseEvent(QMouseEvent *event)
 QPoint canvas::clip_to_tile(QPoint point)
 {
 	return {(point.x() - point.x() % (scale * 8)), (point.y() - point.y() % (scale * 8))};
+}
+
+int canvas::position_to_tile(QPoint position)
+{
+	position = clip_to_tile(position);
+	int x = position.x() / scale / 8;
+	int y = position.y() / scale / 8;
+	return y * y_tiles + x;
 }

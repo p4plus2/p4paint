@@ -6,14 +6,19 @@ abstract_dialog::abstract_dialog(QWidget *parent) : QDialog(parent)
 	setWindowFlags(Qt::Tool);
 }
 
-void abstract_dialog::set_active_editor(image_editor *editor)
+void abstract_dialog::set_active_image(image_editor *image)
 {
-	active_editor = editor;
+	active_image = image;
+}
+
+void abstract_dialog::set_active_palette(palette_editor *palette)
+{
+	active_palette = palette;
 }
 
 void abstract_dialog::refresh()
 {
-	if(!active_editor){
+	if(!active_image){
 		close();
 	}
 }

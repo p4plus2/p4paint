@@ -18,13 +18,16 @@
 main_window::main_window(QWidget *parent)
         : QMainWindow(parent)
 {
-	statusBar()->addWidget(statusbar);
+	statusBar()->addWidget(status_bar);
 	
 	QWidget* widget = new QWidget(this);
-	QVBoxLayout *tab_layout = new QVBoxLayout(widget);
-	tab_layout->addWidget(image_tab_widget);
-	tab_layout->addWidget(palette_tab_widget);
-	widget->setLayout(tab_layout);
+	QVBoxLayout *layout = new QVBoxLayout(widget);
+	layout->addWidget(image_tab_widget);
+	QHBoxLayout *tools_layout = new QHBoxLayout(widget);
+	tools_layout->addWidget(palette_tab_widget);
+	tools_layout->addWidget(toolbox_widget);
+	layout->addLayout(tools_layout);
+	widget->setLayout(layout);
 	setCentralWidget(widget);
 	
 	image_tab_widget->setTabsClosable(true);
@@ -140,16 +143,18 @@ bool main_window::close_palette(int i)
 void main_window::changed_image(int i)
 {
 	if(i == -1){
-		dialog_controller->set_active_editor(nullptr);
+//		dialog_controller->set_active_image(nullptr);
 		menu_controller->connect_to_widget(nullptr, EDITOR_EVENT);
+		toolbox_widget->set_active_editor(nullptr);
 		return;
 	}
 	
 	image_editor *editor = get_image_editor(i);
 
 	editor->set_focus();
-	dialog_controller->set_active_editor(editor);
+//	dialog_controller->set_active_image(editor);
 	menu_controller->connect_to_widget(editor, EDITOR_EVENT);
+	toolbox_widget->set_active_editor(editor);
 }
 
 void main_window::changed_palette(int i)
@@ -312,6 +317,7 @@ void main_window::create_new_image_tab(QString name, bool new_file)
 	}
 	
 	connect(editor, &image_editor::save_state_changed, this, &main_window::image_save_state);
+	connect(editor, &image_editor::update_status_text, status_bar, &QLabel::setText);
 	
 	image_tab_widget->addTab(editor, QFileInfo(name).fileName());
 	image_tab_widget->setCurrentWidget(editor);

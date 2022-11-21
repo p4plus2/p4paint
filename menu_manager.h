@@ -14,7 +14,7 @@ class menu_manager : public QObject
 		Q_OBJECT
 	public:
 		explicit menu_manager(main_window *parent, QMenuBar *m, QUndoGroup *u);
-		~menu_manager();
+		~menu_manager() override;
 		void connect_to_widget(QObject *object, event_types event){ event_map[event] = object; }
 		void group_connect_to_widget(QObject *object, event_types event);
 		

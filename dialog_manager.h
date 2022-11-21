@@ -6,18 +6,22 @@
 #include "dialogs/abstract_dialog.h"
 
 class image_editor;
+class palette_editor;
 
 class dialog_manager : public QObject
 {
 		Q_OBJECT
 	public:
-		explicit dialog_manager(QWidget *parent = 0);
+		explicit dialog_manager(QWidget *parent = nullptr);
 		
-		void connect_to_editor(image_editor *editor);
-		void set_active_editor(image_editor *editor);
+		void connect_to_image(image_editor *image);
+		void set_active_image(image_editor *image);
+		
+		void connect_to_palette(palette_editor *palette);
+		void set_active_palette(palette_editor *palette);
 	
 	protected:
-		virtual bool event(QEvent *event);
+		virtual bool event(QEvent *event) override;
 		
 	private:
 		QMap<dialog_events, abstract_dialog *> dialog_map;

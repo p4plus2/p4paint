@@ -1,5 +1,6 @@
 #include "dialog_manager.h"
 #include "image_editor.h"
+#include "palette_editor.h"
 
 dialog_manager::dialog_manager(QWidget *parent) :
         QObject(parent)
@@ -7,17 +8,32 @@ dialog_manager::dialog_manager(QWidget *parent) :
 
 }
 
-void dialog_manager::connect_to_editor(image_editor *editor)
+void dialog_manager::connect_to_image(image_editor *image)
 {
-#define CONNECT(D,E,S,T) connect((D *)find_dialog(E), &D::S, editor, &hex_editor::T);
+#define CONNECT(D,E,S,T) connect((D *)find_dialog(E), &D::S, image, &image_editor::T);
 
 #undef CONNECT
 }
 
-void dialog_manager::set_active_editor(image_editor *editor)
+void dialog_manager::set_active_image(image_editor *image)
 {
 	for(auto &dialog : dialog_map){
-		dialog->set_active_editor(editor);
+		dialog->set_active_image(image);
+		dialog->refresh();
+	}
+}
+
+void dialog_manager::connect_to_palette(palette_editor *palette)
+{
+#define CONNECT(D,E,S,T) connect((D *)find_dialog(E), &D::S, palette, &palette_editor::T);
+
+#undef CONNECT
+}
+
+void dialog_manager::set_active_palette(palette_editor *palette)
+{
+	for(auto &dialog : dialog_map){
+		dialog->set_active_palette(palette);
 		dialog->refresh();
 	}
 }
@@ -45,5 +61,5 @@ abstract_dialog *dialog_manager::find_dialog(dialog_events id)
 		return dialog_map[id];
 	}
 	qDebug() << "Error: Dialog " << id << " not found";
-	return 0;
+	return nullptr;
 }

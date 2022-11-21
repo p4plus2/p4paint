@@ -15,6 +15,7 @@ class abstract_format
 		virtual tile_data get_tile(int offset) = 0;
 		virtual QVector<tile_data>get_tiles(int offset, int count) = 0;
 		virtual int get_color_depth() = 0;
+		virtual ~abstract_format(){}
 		
 	protected:
 		const QByteArray *buffer;
@@ -35,6 +36,7 @@ struct format_factory
 		format_list->add_factory(this);
 	}
 	virtual abstract_format *get_format(const QByteArray *b) = 0;
+	virtual ~format_factory(){}
 	
 	QString name;
 };

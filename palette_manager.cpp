@@ -4,8 +4,8 @@ palette_manager::palette_manager(QObject *parent) : QObject(parent)
 {
 	palette_container palette;
 	for(int i = 0; i < 256; i++){
-		int color = QColor::fromHsl(22.5 * (i & 15), 40 + ((255 - i) >> 4) * 13, 50 + (i >> 4) * 6).rgba();
-		palette.set_color_pc(256, 0, i, color);
+		QColor color = QColor::fromHsl((int)(22.5 * (i & 15)), 45 + ((255 - i) >> 4) * 14, 50 + (i >> 4) * 6);
+		palette.set_color_pc(256, 0, i, color.rgba());
 	}
 	register_palette(palette);
 }

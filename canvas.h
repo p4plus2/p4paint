@@ -18,12 +18,18 @@ class canvas : public QWidget
 		void set_scale(int scale_factor);
 		void set_format(abstract_format *image_format);
 		
-	protected:
-		void paintEvent(QPaintEvent *event);
+		void set_tile_palette(int palette);
+		void set_tile_subpalette(int subpalette);
+	
+	signals:
+		void tile_changed(const tile_data tile);
 		
-		void mousePressEvent(QMouseEvent *event);
-		void mouseMoveEvent(QMouseEvent *event);
-		void mouseReleaseEvent(QMouseEvent *event);
+	protected:
+		void paintEvent(QPaintEvent *event) override;
+		
+		void mousePressEvent(QMouseEvent *event) override;
+		void mouseMoveEvent(QMouseEvent *event) override;
+		void mouseReleaseEvent(QMouseEvent *event) override;
 	
 	private:
 		QByteArray *buffer;
@@ -41,6 +47,7 @@ class canvas : public QWidget
 		QPoint mouse_release;
 		
 		QPoint clip_to_tile(QPoint point);
+		int position_to_tile(QPoint position);
 		
 		int y_tiles = 32;
 		int x_tiles = 32;

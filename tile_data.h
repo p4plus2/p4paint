@@ -4,8 +4,8 @@
 #include <QImage>
 
 struct tile_data{
-	short palette;
-	short subpalette;
+	int palette;
+	int subpalette;
 	QImage image;
 };
 

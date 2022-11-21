@@ -16,7 +16,7 @@ class abstract_menu_item : public QAction
 	public:
 		abstract_menu_item(QString txt, menu_manager *p);
 		abstract_menu_item(QString txt, QEvent *e, toggle_function t, QKeySequence h, menu_manager *p, bool c);
-		~abstract_menu_item();
+		~abstract_menu_item() override;
 		
 		void check_enabled(){ if(toggle){ setEnabled(toggle()); } }
 		

@@ -8,6 +8,7 @@
 #include "dialog_manager.h"
 #include "menu_manager.h"
 #include "palette_manager.h"
+#include "toolbox.h"
 
 class image_editor;
 class palette_editor;
@@ -17,9 +18,9 @@ class main_window : public QMainWindow
 		Q_OBJECT
 		
 	public:
-		main_window(QWidget *parent = 0);
+		main_window(QWidget *parent = nullptr);
 		image_editor *get_active_editor();
-		~main_window();
+		~main_window() override;
 		
 	public slots:
 		bool close_image(int i);
@@ -36,13 +37,14 @@ class main_window : public QMainWindow
 		bool save_palette(bool override_name = false, int target = -1);
 		
 	protected:
-		virtual bool event(QEvent *event);
-		virtual void closeEvent(QCloseEvent *event);
+		virtual bool event(QEvent *event) override;
+		virtual void closeEvent(QCloseEvent *event) override;
 
 	private:
-		QLabel *statusbar = new QLabel(this);
+		QLabel *status_bar = new QLabel(this);
 		QTabWidget *image_tab_widget = new QTabWidget(this);
 		QTabWidget *palette_tab_widget = new QTabWidget(this);
+		toolbox *toolbox_widget = new toolbox(this);
 		QUndoGroup *undo_group = new QUndoGroup(this);
 		dialog_manager *dialog_controller = new dialog_manager(this);
 		menu_manager *menu_controller = new menu_manager(this, menuBar(), undo_group);

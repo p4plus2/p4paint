@@ -37,6 +37,7 @@ image_editor::image_editor(QWidget *parent, QString file_name, QUndoGroup *undo_
 	connect(page_up, &QPushButton::clicked, [=](bool){ draw_area->scroll_tiles(-16); });
 	connect(tile_down, &QPushButton::clicked, [=](bool){ draw_area->scroll_tiles(1); });
 	connect(page_down, &QPushButton::clicked, [=](bool){ draw_area->scroll_tiles(16); });
+	connect(draw_area, &canvas::tile_changed, this, &image_editor::set_selected_tile);
 	
 	QVBoxLayout *scroll_layout = new QVBoxLayout();
 	scroll_layout->addWidget(page_up, Qt::AlignTop);
@@ -117,6 +118,11 @@ void image_editor::context_menu(const QPoint& position)
 	//menu.addSeparator();
 	//menu.addAction("Select all", this, SLOT(select_all()), hotkey::SelectAll);
 	menu.exec(mapToGlobal(position));
+}
+
+void image_editor::set_selected_tile(const tile_data tile)
+{
+	
 }
 
 void image_editor::keyPressEvent(QKeyEvent *event)

@@ -9,6 +9,8 @@
 #include <QMap>
 #include <QComboBox>
 
+#include "tile_data.h"
+
 class canvas;
 class abstract_format;
 class palette_manager;
@@ -19,7 +21,7 @@ class image_editor : public QWidget
 	public:
 		explicit image_editor(QWidget *parent, QString file_name, 
 		                      QUndoGroup *undo_group, palette_manager *controller, bool new_file = false);
-		~image_editor();
+		~image_editor() override;
 		
 		QString load_error();
 		
@@ -34,13 +36,15 @@ class image_editor : public QWidget
 		void change_format(int a);
 		
 		void context_menu(const QPoint& position);
+		void set_selected_tile(const tile_data tile);
 	signals:
 		void save_state_changed(bool save);
+		void update_status_text(QString text);
 
 	protected:
-		virtual void keyPressEvent(QKeyEvent *event);
-		virtual void wheelEvent(QWheelEvent *event);
-		virtual bool event(QEvent *event);
+		virtual void keyPressEvent(QKeyEvent *event) override;
+		virtual void wheelEvent(QWheelEvent *event) override;
+		virtual bool event(QEvent *event) override;
 
 	private:
 		canvas *draw_area = nullptr;

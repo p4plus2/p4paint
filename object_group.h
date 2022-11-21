@@ -17,7 +17,7 @@ class object_group : public QObject
 		void distribute_static_result_event(QEvent *e);
 		
 	protected:
-		virtual bool event(QEvent *e);
+		virtual bool event(QEvent *e) override;
 	private:
 		QList<QObject *> group;
 };

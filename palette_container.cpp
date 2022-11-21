@@ -54,13 +54,13 @@ quint16 palette_container::to_snes(QRgb color)
 
 QRgb palette_container::to_pc(quint16 color)
 {
-	unsigned int red = (color & 0x1F) << 3;
+	int red = (color & 0x1F) << 3;
 	red |= red >> 5;
 	
-	unsigned int green = ((color >> 5) & 0x1F) << 3;
+	int green = ((color >> 5) & 0x1F) << 3;
 	green |= green >> 5;
 	
-	unsigned int blue = ((color >> 10) & 0x1F) << 3;
+	int blue = ((color >> 10) & 0x1F) << 3;
 	blue |= blue >> 5;
 	
 	return QColor::fromRgb(red, green, blue).rgba();

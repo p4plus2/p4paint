@@ -92,7 +92,7 @@ QMenu *menu_manager::find_menu(QString id)
 		}
 	}
 	qDebug() << "Error: Menu " << id << " not found";
-	return 0;
+	return nullptr;
 }
 
 void menu_manager::enable_checkable(QActionGroup *group)
